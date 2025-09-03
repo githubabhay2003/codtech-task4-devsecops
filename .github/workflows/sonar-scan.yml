@@ -10,10 +10,15 @@ jobs:
     name: Scan with OWASP ZAP
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Start local web server
+        # Use Python's built-in server to host the files in the background.
+        # This makes our index.html available at http://localhost:8000
+        run: python -m http.server 8000 &
 
       - name: ZAP Scan
         uses: zaproxy/action-baseline@v0.11.0
         with:
-          # We will scan the file directly from the runner's local filesystem
-          target: 'index.html'
+          # Scan the URL of the server we just started
+          target: 'http://localhost:8000'
