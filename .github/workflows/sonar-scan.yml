@@ -1,24 +1,19 @@
-name: SonarCloud Security Scan
+name: OWASP ZAP Security Scan
 
 on:
   push:
     branches: [ "main" ]
 
 jobs:
-  build:
-    name: Build and Analyze
+  zap_scan:
     runs-on: ubuntu-latest
+    name: Scan with OWASP ZAP
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # SonarCloud needs a full history to analyze
+        uses: actions/checkout@v2
 
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          # All parameters are passed as environment variables
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-          SONAR_PROJECT_KEY: githubabhay2003_codtech-task4-devsecops
-          SONAR_ORGANIZATION: githubabhay2003
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.11.0
+        with:
+          # We will scan the file directly from the runner's local filesystem
+          target: 'index.html'
