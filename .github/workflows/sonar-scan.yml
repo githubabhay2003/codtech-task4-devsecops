@@ -9,16 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Scan with OWASP ZAP
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Start local web server
-        # Use Python's built-in server to host the files in the background.
-        # This makes our index.html available at http://localhost:8000
-        run: python -m http.server 8000 &
-
-      - name: ZAP Scan
+      - name: OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.11.0
         with:
-          # Scan the URL of the server we just started
-          target: 'http://localhost:8000'
+          # Use the 'file://' protocol and the absolute path to the workspace
+          # This tells ZAP exactly where to find the file on the runner.
+          target: 'file://${{ github.workspace }}/index.html'
