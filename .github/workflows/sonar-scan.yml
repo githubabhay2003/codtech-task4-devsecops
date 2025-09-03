@@ -5,20 +5,17 @@ on:
     branches: [ "main" ]
 
 jobs:
-  sonar-scan:
-    name: SonarCloud Scan
+  build:
+    name: Build and Analyze
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
+      - uses: sonarsource/sonarqube-scan-action@master
         env:
-          # All parameters are passed as environment variables
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
+          # These are automatically read by the scanner
           SONAR_PROJECT_KEY: githubabhay2003_codtech-task4-devsecops
           SONAR_ORGANIZATION: githubabhay2003
