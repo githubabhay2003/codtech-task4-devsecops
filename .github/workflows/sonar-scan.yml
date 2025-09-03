@@ -12,12 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          # SonarCloud needs a full history to analyze, not just a shallow clone
           fetch-depth: 0
 
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@master
         env:
-          # These are the credentials for SonarCloud
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          # Replace these with the values from your SonarCloud project
+          projectKey: githubabhay2003_codtech-task4-devsecops
+          organization: githubabhay2003
