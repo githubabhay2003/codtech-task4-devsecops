@@ -20,6 +20,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
         with:
-          # Replace these with the values from your SonarCloud project
+          # The 'with' block must be at the same indentation level as 'env'
           projectKey: githubabhay2003_codtech-task4-devsecops
           organization: githubabhay2003
