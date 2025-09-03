@@ -17,9 +17,8 @@ jobs:
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
+          # All parameters are passed as environment variables
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
-        with:
-          # The 'with' block must be at the same indentation level as 'env'
-          projectKey: githubabhay2003_codtech-task4-devsecops
-          organization: githubabhay2003
+          SONAR_PROJECT_KEY: githubabhay2003_codtech-task4-devsecops
+          SONAR_ORGANIZATION: githubabhay2003
