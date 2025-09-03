@@ -1,21 +1,18 @@
-name: SonarCloud Security Scan
-
+name: Build
 on:
   push:
-    branches: [ "main" ]
-
+    branches:
+      - main
 jobs:
   build:
-    name: Build and Analyze
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-      - uses: sonarsource/sonarqube-scan-action@master
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to decorate PRs
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-          # These are automatically read by the scanner
-          SONAR_PROJECT_KEY: githubabhay2003_codtech-task4-devsecops
-          SONAR_ORGANIZATION: githubabhay2003
